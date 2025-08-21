@@ -11,7 +11,7 @@ Despite steady sales, the company faces challenges with:
     Rising shipping costs  
     Customer churn (loss of repeat buyers)  
 
-Management seeks data-driven insights   to guide decisions on targeting customer, product strategy, and regional expansion  .
+Management seeks data-driven insights to guide decisions on targeting customer, product strategy, and regional expansion  .
 
 🎯 Business Questions  
 
