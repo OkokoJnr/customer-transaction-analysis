@@ -5,7 +5,7 @@ CREATE SCHEMA IF NOT EXISTS superstore;
 SET search_path TO superstore, public;
 
 -- staging the customers table
-DROP TABLE IF EXISTS stg_customers;
+DROP TABLE IF EXISTS public.stg_customers;
 CREATE TABLE stg_customers (
   customer_id   TEXT,
   customer_name TEXT,
@@ -18,19 +18,19 @@ CREATE TABLE stg_customers (
 );
 
 -- Staging table for orders (raw)
-DROP TABLE IF EXISTS stg_orders;
-CREATE TABLE stg_orders (
+DROP TABLE IF EXISTS superstore.stg_orders;
+CREATE TABLE superstore.stg_orders (
   order_id   TEXT,
   order_date TEXT,
   ship_date  TEXT,
-  ship_mode  TEXT
+  ship_mode  TEXT,
+  customer_id TEXT,
+  product_id TEXT
 );
 
-
 -- Staging table for products transactions (raw)
-DROP TABLE IF EXISTS stg_products;
-CREATE TABLE stg_products (
-  customer_id   TEXT,
+DROP TABLE IF EXISTS superstore.stg_products;
+CREATE TABLE superstore.stg_products (
   product_id    TEXT,
   category      TEXT,
   sub_category  TEXT,
@@ -38,6 +38,5 @@ CREATE TABLE stg_products (
   sales         TEXT,
   quantity      TEXT,
   discount      TEXT,
-  profit        TEXT,
-  order_id      TEXT
+  profit        TEXT
 );
