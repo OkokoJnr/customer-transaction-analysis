@@ -11,3 +11,12 @@ FROM superstore.orders
 GROUP BY 1
 ORDER BY 2 DESC;
 
+--Categories that are most/least profitable?
+SELECT 
+    category,
+    SUM(sales) AS total_sales,
+    SUM(profit) AS total_profit
+FROM superstore.orders
+GROUP BY 1
+ORDER BY total_profit DESC;
+
