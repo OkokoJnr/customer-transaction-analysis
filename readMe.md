@@ -43,14 +43,41 @@ This project aims to answer the following:
 	Source:   [Kaggle – Superstore Dataset](https://www.kaggle.com/datasets/vivek468/superstore-dataset-final)
 	Size:   9,994 rows, 21 columns
 	Grain:   Each row = a unique product purchased in an order.
-	NOTE: In order to demonstrate my ability to carry out order SQL function, I created table for Order, Product, and Customers from the origin datast from Kaggle
-
+	
 		Key Fields:
 			Order Information:  Order ID, Order Date, Ship Date, Ship Mode
 			Customer Information:  Customer ID, Customer Name, Segment, Region, City, State
      			Product Information:  Product ID, Category, Sub-Category, Product Name
      			Financials:  Sales, Quantity, Discount, Profit
 
+About Dataset
+Context
+With growing demands and cut-throat competitions in the market, a Superstore Giant is seeking your knowledge in understanding what works best for them. They would like to understand which products, regions, categories and customer segments they should target or avoid.
+
+
+Metadata
+Row ID => Unique ID for each row.
+Order ID => Unique Order ID for each Customer.
+Order Date => Order Date of the product.
+Ship Date => Shipping Date of the Product.
+Ship Mode=> Shipping Mode specified by the Customer.
+Customer ID => Unique ID to identify each Customer.
+Customer Name => Name of the Customer.
+Segment => The segment where the Customer belongs.
+Country => Country of residence of the Customer.
+City => City of residence of of the Customer.
+State => State of residence of the Customer.
+Postal Code => Postal Code of every Customer.
+Region => Region where the Customer belong.
+Product ID => Unique ID of the Product.
+Category => Category of the product ordered.
+Sub-Category => Sub-Category of the product ordered.
+Product Name => Name of the Product
+Sales => Sales of the Product.
+Quantity => Quantity of the Product.
+Discount => Discount provided.
+Profit => Profit/Loss incurred.
+ 
 🛠 Tools & Technologies  
 
 	SQL (PostgreSQL):   querying and analysis
