@@ -39,3 +39,22 @@ FROM superstore.orders
 GROUP BY 1
 ORDER BY total_profit ASC
 LIMIT 8
+
+--profitability and sales of categories and subcategories over months
+SELECT 
+    TO_CHAR(order_date, 'month') AS order_month,
+    category,
+    SUM(sales) AS total_sales,
+    SUM(profit) AS total_profit
+FROM superstore.orders
+GROUP BY 1,2
+ORDER BY order_month, total_profit DESC
+
+SELECT
+    TO_CHAR(order_date, 'month') AS order_month,
+    sub_category,
+    SUM(sales) AS total_sales,
+    SUM(profit) AS total_profit
+FROM superstore.orders
+GROUP BY 1,2
+ORDER BY order_month, total_profit DESC
