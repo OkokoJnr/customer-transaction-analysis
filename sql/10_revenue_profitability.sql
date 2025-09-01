@@ -20,3 +20,22 @@ FROM superstore.orders
 GROUP BY 1
 ORDER BY total_profit DESC;
 
+--Sub-categories that are most profitable? (top 7)
+SELECT
+    sub_category,
+    SUM(sales) AS total_sales,
+    SUM(profit) AS total_profit
+FROM superstore.orders
+GROUP BY 1 
+ORDER BY total_profit DESC
+LIMIT 7
+
+--Sub-categories that are least profitable? (bottom 8)
+SELECT
+    sub_category,
+    SUM(sales) AS total_sales,
+    SUM(profit) AS total_profit
+FROM superstore.orders
+GROUP BY 1
+ORDER BY total_profit ASC
+LIMIT 8
