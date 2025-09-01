@@ -12,17 +12,104 @@ HAVING COUNT(*) > 1;
 --removing duplicates if any. Duplicate here is define as rows with same row id or rows where all columns are thesame.
 
 --remove duplicates based on the minimum ctid for each customer_id
+DROP TABLE superstore.stg_orders_clean;
+CREATE TABLE superstore.stg_orders_clean (
+    row_id INT,
+    order_id TEXT,
+    order_date    DATE, 
+    ship_date     DATE,
+    ship_mode     TEXT,
+    customer_id   TEXT,
+    customer_name TEXT, 
+    segment       TEXT,
+    country       TEXT,
+    city          TEXT,
+    state         TEXT,
+    postal_code   TEXT,
+    region        TEXT,
+    product_id    TEXT,
+    category      TEXT,
+    sub_category  TEXT,
+    product_name  TEXT,
+    sales         NUMERIC(12,2),
+    quantity      INT,
+    discount      NUMERIC(5,2),
+    profit        NUMERIC(12,2)
+);
 
-DELETE FROM superstore.stg_orders
+INSERT INTO superstore.stg_orders_clean
+SELECT
+    row_id::INT,
+    order_id,
+    order_date::DATE,
+    ship_date::DATE,
+    ship_mode,
+    customer_id,
+    customer_name,
+    segment,
+    country,
+    city,
+    state,
+    postal_code,
+    region,
+    product_id,
+    category,
+    sub_category,
+    product_name,
+    sales::NUMERIC(12,2),
+    quantity::INT,
+    discount::NUMERIC(5,2),
+    profit::NUMERIC(12,2)
+FROM superstore.stg_orders;
+
+
+DELETE FROM superstore.stg_orders_clean
 WHERE ctid NOT IN (
     SELECT MIN(ctid)
-    FROM superstore.stg_orders
+    FROM superstore.stg_orders_clean
     GROUP BY order_id, order_date, ship_date,  ship_mode, customer_id, customer_name, segment, country, city,state, postal_code, region, product_id, category, sub_category, product_name, sales,quantity, discount,profit ---group by the column that defines duplicates -- in this case all columns except row_id
 );
 --recheck for duplicates
-SELECT  order_id, order_date, ship_date,  ship_mode, customer_id, customer_name, segment, country, city,state, postal_code, region, product_id, category, sub_category, product_name, sales,quantity, discount,profit 
-FROM superstore.stg_orders
-GROUP BY order_id, order_date, ship_date,  ship_mode, customer_id, customer_name, segment, country, city,state, postal_code, region, product_id, category, sub_category, product_name, sales,quantity, discount,profit 
+SELECT  
+    order_id, 
+    order_date, 
+    ship_date,  
+    ship_mode, 
+    customer_id, 
+    customer_name, 
+    segment, country, 
+    city,
+    state, 
+    postal_code, 
+    region, 
+    product_id, 
+    category, 
+    sub_category, 
+    product_name, 
+    sales,quantity, 
+    discount,profit 
+FROM superstore.stg_orders_clean
+GROUP BY 
+    order_id, 
+    order_date, 
+    ship_date,  
+    ship_mode, 
+    customer_id, 
+    customer_name, 
+    segment, 
+    country, 
+    city,
+    state, 
+    postal_code, 
+    region, 
+    product_id, 
+    category, 
+    sub_category, 
+    product_name, 
+    sales,
+    quantity, 
+    discount,
+    profit 
 HAVING COUNT(*) > 1
 
 -- Create the final orders table
@@ -55,13 +142,34 @@ CREATE TABLE IF NOT EXISTS superstore.orders(
 SELECT * FROM superstore.orders LIMIT 10;
 
 INSERT INTO superstore.orders(
-    row_id, order_id, order_date, ship_date, ship_mode, customer_id, customer_name, segment, country, city, state, postal_code, region, product_id, category, sub_category, product_name, sales, quantity, discount, profit
+    row_id, 
+    order_id, 
+    order_date, 
+    ship_date, 
+    ship_mode, 
+    customer_id, 
+    customer_name, 
+    segment, 
+    country, 
+    city, 
+    state, 
+    postal_code, 
+    region, 
+    product_id, 
+    category, 
+    sub_category, 
+    product_name, 
+    sales, 
+    quantity, 
+    discount, 
+    profit
 )
+
 SELECT 
     CAST(row_id AS INT), 
     order_id,
-    TO_DATE(order_date, 'MM/DD/YYYY'),
-    TO_DATE(ship_date, 'MM/DD/YYYY'),
+    order_date::date,
+    ship_date::date,
     ship_mode,
     customer_id,
     customer_name,
@@ -79,4 +187,4 @@ SELECT
     CAST(quantity AS INT),
     CAST(discount AS NUMERIC),
     CAST(profit AS NUMERIC)
-FROM superstore.stg_orders;
+FROM superstore.stg_orders_clean

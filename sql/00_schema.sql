@@ -5,6 +5,8 @@ CREATE SCHEMA IF NOT EXISTS superstore;
 SET search_path TO superstore, public;
 
 -- Create the staging table
+DROP TABLE IF EXISTS superstore.stg_orders;
+
 CREATE TABLE superstore.stg_orders (
     row_id TEXT,              -- Unique ID for each row
     order_id TEXT,            -- Unique order ID for each customer
