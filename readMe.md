@@ -27,8 +27,7 @@ This project aims to answer the following:
      Who are the top 10 customers by total spending?
      Are there customers who have stopped purchasing (churn)?
 
-3.   Regional Performance  
-
+3.   States and Cities Performance  
      Which regions, states, or cities generate the highest revenue?
      Are there markets where losses consistently occur?
 
