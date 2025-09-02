@@ -12,13 +12,7 @@ GROUP BY 1
 ORDER BY 2 DESC;
 
 --Categories that are most/least profitable?
-SELECT 
-    category,
-    SUM(sales) AS total_sales,
-    SUM(profit) AS total_profit
-FROM superstore.orders
-GROUP BY 1
-ORDER BY total_profit DESC;
+a
 
 --Sub-categories that are most profitable? (top 7)
 SELECT
@@ -58,3 +52,34 @@ SELECT
 FROM superstore.orders
 GROUP BY 1,2
 ORDER BY order_month, total_profit DESC
+
+--REGIONAL PERFORMANCE ACROSS CATEGORIES AND SUB_CATEGORIES -profitability and sales of categories and subcategories over regions
+
+-- regions
+SELECT
+    region,
+    SUM(sales) AS total_sales,
+    SUM(profit) AS total_profit
+FROM superstore.orders 
+GROUP BY 1
+ORDER BY total_profit DESC;
+
+--total profit of categories across regions
+SELECT
+    region,
+    category,
+    SUM(profit) AS total_profit
+FROM superstore.orders
+GROUP BY 1,2
+ORDER BY region, category DESC;
+
+--total profit of sub_categories across regions
+SELECT
+    region ,
+    category,
+    sub_category,
+    SUM(profit)  AS total_profit,
+     ROW_NUMBER () OVER(PARTITION BY region ORDER BY SUM(profit))
+FROM superstore.orders 
+GROUP BY 1,2,3
+ORDER BY region ASC, total_profit DESC, category ASC
