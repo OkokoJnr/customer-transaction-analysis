@@ -49,11 +49,6 @@ This project aims to answer the following:
      			Product Information:  Product ID, Category, Sub-Category, Product Name
      			Financials:  Sales, Quantity, Discount, Profit
 
-About Dataset
-Context
-With growing demands and cut-throat competitions in the market, a Superstore Giant is seeking your knowledge in understanding what works best for them. They would like to understand which products, regions, categories and customer segments they should target or avoid.
-
-
 Metadata
 Row ID => Unique ID for each row.
 Order ID => Unique Order ID for each Customer.
@@ -83,12 +78,18 @@ Profit => Profit/Loss incurred.
 	pgAdmin 4:   database management
 	GitHub:   portfolio hosting and documentation
 
+🗄️ Database Schema (ERD)
 
+	Fact Table: orders (one row per order line = product in an order)
+
+	Dimensions: customers, products, locations, calendar, shipments
+	
 📌 Project Deliverables  
 
+	Clean ETL scripts (staging => clean =>fact tables)
 	SQL scripts answering core business questions
 	A structured database schema (customers, products, orders, sales fact table)
-	Query outputs with insights (screenshots/tables)
+	Query outputs with insights (screenshots, tables, and charts from Tableau )
 	Final business recommendations for Superstore
 
 
@@ -100,6 +101,13 @@ By the end of this project, in the analysis I will:
 	Identify profitable vs unprofitable product lines
 	Show revenue and profit trends by region and segment
 	Recommend strategies to reduce losses from discounts and shipping
+	
+	| Business Question Area            | SQL Script                        | Output
+	| --------------------------------- | --------------------------------- | -------------------------------------- 							|
+	| Revenue & Profitability           | [10_revenue_profitability.sql](sql/10_revenue_profitability.sql)         | Monthly trends, most/least profitable categories & sub-categories	|
+	| Customer Segmentation & Retention | [11_customer_segementations.sql](./11_customer_segementations.sql)        | Top 10 customers, churn status ]segmentation						|
+	| States & Cities Performance       | [12_states_city_performance.sql](./12_states_city_performance.sql)          | Most/least profitable cities, sales by state						|
+	| Operational Efficiency            | [13_q_operational_efficiency.sql](./13_operational_efficiency.sql) | Shipping mode delivery time vs profit discount impact			|
 
-This project demonstrates my ability to transform raw transactional data into actionable business insights   using SQL alone.
+This project demonstrates ability to transform raw transactional data into actionable business insights using SQL along with using [Tableau](https://public.tableau.com/app/profile/godwin.jnr.okoko/viz/superstore_17568519068350/superstorevisualizations?publish=yes) for visualizations.
 
