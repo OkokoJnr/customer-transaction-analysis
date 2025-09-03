@@ -11,31 +11,50 @@ HAVING COUNT(*) > 1;
 
 --removing duplicates if any. Duplicate here is define as rows with same row id or rows where all columns are thesame.
 
---remove duplicates based on the minimum ctid for each customer_id
-DROP TABLE superstore.stg_orders_clean;
-CREATE TABLE superstore.stg_orders_clean (
-    row_id INT,
-    order_id TEXT,
-    order_date    DATE, 
-    ship_date     DATE,
-    ship_mode     TEXT,
-    customer_id   TEXT,
-    customer_name TEXT, 
-    segment       TEXT,
-    country       TEXT,
-    city          TEXT,
-    state         TEXT,
-    postal_code   TEXT,
-    region        TEXT,
-    product_id    TEXT,
-    category      TEXT,
-    sub_category  TEXT,
-    product_name  TEXT,
-    sales         NUMERIC(12,2),
-    quantity      INT,
-    discount      NUMERIC(5,2),
-    profit        NUMERIC(12,2)
-);
+--cast and trim data types and create a clean staging table
+DROP TABLE IF EXISTS superstore.stg_orders_casted;
+CREATE TABLE superstore.stg_orders_casted AS 
+SELECT
+    NULLIF(TRIM(row_id), '')::INT AS row_id,
+    NULLIF(TRIM(order_id), '') AS order_id,
+    TO_DATE(NULLIF(TRIM(order_date), ''), 'MM/DD/YYYY') AS order_date,
+    TO_DATE(NULLIF(TRIM(ship_date), ''), 'MM/DD/YYYY') AS ship_date,
+    NULLIF(TRIM(ship_mode), '') AS ship_mode,
+    NULLIF(TRIM(customer_id), '') AS customer_id,
+    NULLIF(TRIM(customer_name), '') AS customer_name,
+    NULLIF(TRIM(segment), '') AS segment,
+    NULLIF(TRIM(country), '') AS country,
+
+    NULLIF(TRIM(city), '') AS city,
+    NULLIF(TRIM(state), '') AS state,
+    NULLIF(TRIM(postal_code), '') AS postal_code,
+    NULLIF(TRIM(region), '') AS region,
+    NULLIF(TRIM(product_id), '') AS product_id,
+    NULLIF(TRIM(category), '') AS category,
+    NULLIF(TRIM(sub_category), '') AS sub_category,
+    NULLIF(TRIM(product_name), '') AS product_name,
+    NULLIF(TRIM(sales), '')::NUMERIC(12,2) AS sales,
+    NULLIF(TRIM(quantity), '')::INT AS quantity,
+    NULLIF(TRIM(discount), '')::NUMERIC(5,2) AS discount,
+    NULLIF(TRIM(profit), '')::NUMERIC(12,2) AS profit
+FROM superstore.stg_orders;
+--DEDUPLICATE 
+DROP TABLE IF EXISTS superstore.stg_orders_clean;
+CREATE TABLE superstore.stg_orders_clean AS
+WITH ranked_orders AS (
+    SELECT
+        *,
+        ROW_NUMBER() OVER (
+            PARTITION BY order_id, order_date, ship_date, ship_mode, customer_id, customer_name, segment,
+                         country, city, state, postal_code, region, product_id, category, sub_category,
+                         product_name, sales, quantity, discount, profit
+            ORDER BY row_id
+        ) AS rn
+    FROM superstore.stg_orders_casted
+)
+SELECT *
+FROM superstore.stg_orders_clean
+WHERE rn = 1;
 
 INSERT INTO superstore.stg_orders_clean
 SELECT
@@ -62,13 +81,6 @@ SELECT
     profit::NUMERIC(12,2)
 FROM superstore.stg_orders;
 
-
-DELETE FROM superstore.stg_orders_clean
-WHERE ctid NOT IN (
-    SELECT MIN(ctid)
-    FROM superstore.stg_orders_clean
-    GROUP BY order_id, order_date, ship_date,  ship_mode, customer_id, customer_name, segment, country, city,state, postal_code, region, product_id, category, sub_category, product_name, sales,quantity, discount,profit ---group by the column that defines duplicates -- in this case all columns except row_id
-);
 --recheck for duplicates
 SELECT  
     order_id, 
@@ -113,8 +125,8 @@ GROUP BY
 HAVING COUNT(*) > 1
 
 -- Create the final orders table
-DROP TABLE IF EXISTS superstore.orders
-CREATE TABLE IF NOT EXISTS superstore.orders(
+DROP TABLE IF EXISTS superstore.orders;
+CREATE TABLE superstore.orders(
     row_id INT PRIMARY KEY,
     order_id VARCHAR(50) NOT NULL,
     order_date date,
@@ -166,7 +178,7 @@ INSERT INTO superstore.orders(
 )
 
 SELECT 
-    CAST(row_id AS INT), 
+    row_id, 
     order_id,
     order_date::date,
     ship_date::date,

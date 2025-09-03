@@ -83,7 +83,7 @@ Profit => Profit/Loss incurred.
 	Fact Table: orders (one row per order line = product in an order)
 
 	Dimensions: customers, products, locations, calendar, shipments
-	
+
 📌 Project Deliverables  
 
 	Clean ETL scripts (staging => clean =>fact tables)
@@ -107,7 +107,7 @@ By the end of this project, in the analysis I will:
 	| Revenue & Profitability           | [10_revenue_profitability.sql](sql/10_revenue_profitability.sql)         | Monthly trends, most/least profitable categories & sub-categories	|
 	| Customer Segmentation & Retention | [11_customer_segementations.sql](./11_customer_segementations.sql)        | Top 10 customers, churn status ]segmentation						|
 	| States & Cities Performance       | [12_states_city_performance.sql](./12_states_city_performance.sql)          | Most/least profitable cities, sales by state						|
-	| Operational Efficiency            | [13_q_operational_efficiency.sql](./13_operational_efficiency.sql) | Shipping mode delivery time vs profit discount impact			|
+	| Operational Efficiency            | [13_operational_efficiency.sql](./13_operational_efficiency.sql) | Shipping mode delivery time vs profit discount impact			|
 
 This project demonstrates ability to transform raw transactional data into actionable business insights using SQL along with using [Tableau](https://public.tableau.com/app/profile/godwin.jnr.okoko/viz/superstore_17568519068350/superstorevisualizations?publish=yes) for visualizations.
 

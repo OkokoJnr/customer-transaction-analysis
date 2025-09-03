@@ -4,13 +4,17 @@
 
 --Overall Sales and Profit Trends
 -- Monthly Sales and Profit
-SELECT TO_CHAR(order_date, 'month'),
+WITH m AS (
+SELECT date_trunc('month', order_date)::date AS month_start,
     SUM(sales) AS total_sales,
     SUM(profit) AS total_profit
 FROM superstore.orders
-GROUP BY 1
-ORDER BY 2 DESC;
-
+GROUP BY 1)
+SELECT to_char(month_start, 'YYYY-MM') AS month_ym,
+       total_sales,
+       total_profit
+FROM m
+ORDER BY month_start;
 --Categories that are most/least profitable?
 a
 
@@ -79,7 +83,7 @@ SELECT
     category,
     sub_category,
     SUM(profit)  AS total_profit,
-     ROW_NUMBER () OVER(PARTITION BY region ORDER BY SUM(profit))
+     ROW_NUMBER () OVER(PARTITION BY region ORDER BY SUM(profit)) AS profit_rank
 FROM superstore.orders 
 GROUP BY 1,2,3
 ORDER BY region ASC, total_profit DESC, category ASC
