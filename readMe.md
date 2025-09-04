@@ -104,10 +104,10 @@ By the end of this project, in the analysis I will:
 	
 	| Business Question Area            | SQL Script                        | Output
 	| --------------------------------- | --------------------------------- | -------------------------------------- 							|
-	| Revenue & Profitability           | [10_revenue_profitability.sql](sql/10_revenue_profitability.sql)    	| Monthly trends, most/least profitable categories & sub-categories	|
-	| Customer Segmentation & Retention | [11_customer_segementations.sql](/11_customer_segementations.sql)    | Top 10 customers, churn status |segmentation						|
-	| States & Cities Performance       | [12_states_city_performance.sql](/12_states_city_performance.sql)    | Most/least profitable cities, sales by state						|
-	| Operational Efficiency            | [13_operational_efficiency.sql](/13_operational_efficiency.sql) 		| Shipping mode delivery time vs profit discount impact			|
+	| Revenue & Profitability           | [10_revenue_profitability.sql](https://github.com/OkokoJnr/customer-transaction-analysis/blob/main/sql/10_revenue_profitability.sql)    	| Monthly trends, most/least profitable categories & sub-categories	|
+	| Customer Segmentation & Retention | [11_customer_segementations.sql](https://github.com/OkokoJnr/customer-transaction-analysis/blob/main/11_customer_segementations.sql)    | Top 10 customers, churn status |segmentation						|
+	| States & Cities Performance       | [12_states_city_performance.sql](https://github.com/OkokoJnr/customer-transaction-analysis/blob/main/12_states_city_performance.sql)    | Most/least profitable cities, sales by state						|
+	| Operational Efficiency            | [13_operational_efficiency.sql](https://github.com/OkokoJnr/customer-transaction-analysis/blob/main/13_operational_efficiency.sql) 		| Shipping mode delivery time vs profit discount impact			|
 
 This project demonstrates ability to transform raw transactional data into actionable business insights using SQL along with using [Tableau](https://public.tableau.com/app/profile/godwin.jnr.okoko/viz/superstore_17568519068350/superstorevisualizations?publish=yes) for visualizations.
 
