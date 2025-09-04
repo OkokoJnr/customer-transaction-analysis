@@ -16,7 +16,7 @@ SELECT to_char(month_start, 'YYYY-MM') AS month_ym,
 FROM m
 ORDER BY month_start;
 --Categories that are most/least profitable?
-a
+
 
 --Sub-categories that are most profitable? (top 7)
 SELECT
